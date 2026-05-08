@@ -1,0 +1,116 @@
+schema: spec-driven
+
+context: |
+  ## Projeto: FamilyFinance Web (familyfinance-web)
+
+  Frontend Angular do sistema FamilyFinance — gestão financeira familiar.
+  Backend separado: Spring Boot em http://localhost:8080 (dev).
+
+  ## Stack
+  - Angular 21, standalone components, strict mode
+  - TypeScript 5.9+
+  - Angular Material 21 M3 (tema dark "Halloween" — laranja/roxo)
+  - SCSS com design system em src/estilos/
+  - RxJS 7 + Signals (signal<T> para estado local reativo)
+  - Reactive Forms
+  - HttpClient (@angular/common/http)
+  - ESLint (flat config: eslint.config.mjs) + angular-eslint, Prettier 3.x, Husky + lint-staged
+  - Vitest (testes unitários — sem E2E na v1)
+  - Node.js 20 LTS, npm 11
+
+  ## Idioma obrigatório
+  Português BR em TUDO: arquivos, pastas, variáveis, classes, métodos, commits, mensagens de UI.
+  Exceções (ficam em inglês): HTTP, JWT, UUID, CSS, Observable, signal, inject, pipe, subscribe,
+  Observable, Subject, BehaviorSubject, RxJS, SCSS, true/false, null, undefined, e nomes de
+  bibliotecas externas.
+
+  ## Convenções de nomenclatura
+  - Arquivo de componente: kebab-case → lista-contas.component.ts
+  - Classe TypeScript: PascalCase português → ListaContasComponent
+  - Método / propriedade: camelCase português → carregarContas(), modoEdicao
+  - Serviço: <nome>.servico.ts, classe <Nome>Servico
+  - Interceptor: <nome>.interceptor.ts, exportado como função (HttpInterceptorFn)
+  - Modelo: <nome>.modelo.ts, interfaces e tipos em PascalCase português
+  - Selector: prefixo ff- → ff-lista-contas, ff-formulario-conta
+  - Rota URL: kebab-case português → /contas, /contas/nova, /contas/:id/editar
+  - Branch git: kebab-case → feat/lista-contas, fix/bug-url-servico
+  - Commit: imperativo português → "Adiciona componente de lista de contas"
+
+  ## Estrutura de pastas
+  src/
+  ├── ambientes/
+  │   ├── ambiente.ts              # dev: { producao: false, urlApi: 'http://localhost:8080' }
+  │   └── ambiente.producao.ts     # prod: { producao: true, urlApi: 'https://api.familyfinance.com.br' }
+  ├── app/
+  │   ├── nucleo/
+  │   │   ├── interceptores/       # erroHttpInterceptor (HttpInterceptorFn)
+  │   │   └── servicos/            # ContaServico, futuros: TransacaoServico, etc.
+  │   ├── compartilhado/
+  │   │   └── componentes/         # ConfirmacaoDialogoComponent e outros reutilizáveis
+  │   ├── funcionalidades/
+  │   │   └── contas/              # ListaContasComponent, FormularioContaComponent
+  │   ├── layout/
+  │   │   └── layout-principal/    # LayoutPrincipalComponent (sidenav + router-outlet)
+  │   └── modelos/                 # conta.modelo.ts, futuros: transacao.modelo.ts, etc.
+  └── estilos/
+      ├── _tokens.scss             # design tokens: cores, espaços, sombras, bordas
+      ├── _tipografia.scss         # escala tipográfica e classes ff-texto-*
+      ├── _tema.scss               # tema Angular Material M3 (Halloween dark)
+      ├── _utilitarios.scss        # classes single-purpose ff-*
+      ├── _layout.scss             # mixins de grid e estrutura ff-app-shell, ff-sidenav
+      └── _componentes.scss        # overrides Material + ff-card, ff-tabela-container
+
+  ## Ambientes
+  - Desenvolvimento: producao=false, urlApi='http://localhost:8080/api'
+  - Produção:        producao=true,  urlApi='https://api.familyfinance.com.br/api'
+  - Troca de arquivo configurada em angular.json via fileReplacements na configuração production
+  - v1: sem autenticação (beta pessoal, rede interna) — auth entra na v2 com JWT
+
+  ## Backend
+  - Base URL dev: http://localhost:8080
+  - Swagger UI: http://localhost:8080/swagger-ui.html
+  - familiaId: resolvido pelo backend (v1: config fixa; v2+: token JWT) — nunca enviado pelo frontend
+  - Nunca enviar id ou familiaId nos request bodies
+
+  ## Padrão de erro da API
+  Toda resposta de erro segue:
+    { timestamp: string, status: number, erro: string, mensagem: string, caminho: string }
+  O erroHttpInterceptor lê erro.error.mensagem e exibe via MatSnackBar (duration: 5000ms).
+  Fallback por status: 0 → sem conexão, 404 → não encontrado, 422 → dados inválidos, 500 → erro interno.
+
+  ## Padrões Angular obrigatórios
+  - standalone: true em todos os componentes
+  - inject() em vez de injeção por construtor
+  - signal<T> para estado local: readonly contas = signal<Conta[]>([])
+  - @if / @for em vez de *ngIf / *ngFor (Angular 17+ control flow)
+  - Lazy loading via loadComponent() em app.routes.ts
+  - subscribe() sempre com callback error quando há estado de carregamento
+  - Formulários: Reactive Forms com fb.nonNullable.group()
+
+  ## Design system — tema "Halloween" (dark)
+  - Primária: laranja #ff6b00 (cor-primaria)
+  - Acento: roxo #7c3aed (cor-acento)
+  - Receitas: verde #22c55e
+  - Despesas: vermelho #ef4444
+  - Investimentos: azul #3b82f6
+  - Metas: âmbar #f59e0b
+  - Fundo app: escuro (~#0f172a)
+  - Todos os tokens em src/estilos/_tokens.scss
+
+rules:
+  proposal:
+    - Incluir seção "Fora do Escopo" para delimitar o que NÃO será feito nesta change
+    - Incluir impacto em rotas e navegação
+    - Incluir critérios de aceite mensuráveis
+  design:
+    - Registrar decisões de arquitetura com alternativas consideradas e motivo da escolha
+    - Documentar toda inconsistência encontrada na documentação de referência
+  tasks:
+    - Incluir complexidade por tarefa: P (< 30 min), M (30–90 min), G (> 90 min)
+    - Ordenar por dependências: setup → design system → modelos → serviços → componentes → testes
+    - Separar tarefas de scaffolding de tarefas de feature
+  spec:
+    - Cenários GIVEN/WHEN/THEN com texto em português
+    - Incluir cenários de caminho feliz E cenários de erro (API fora, validação, 404)
+    - Para componentes Angular: descrever comportamento visível ao usuário, não detalhes de implementação
+    - Referenciar contratos da API quando relevante (status codes, campos)

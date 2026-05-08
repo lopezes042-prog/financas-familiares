@@ -1,0 +1,69 @@
+<div class="cabecalho-pagina">
+  <h1>Contas</h1>
+  <a mat-raised-button color="primary" routerLink="/contas/nova">
+    <mat-icon>add</mat-icon>
+    Nova conta
+  </a>
+</div>
+
+@if (carregando()) {
+  <div class="area-carregando">
+    <mat-spinner diameter="40" />
+  </div>
+} @else if (contas().length === 0) {
+  <div class="estado-vazio">
+    <mat-icon>account_balance_wallet</mat-icon>
+    <p>Nenhuma conta cadastrada ainda.</p>
+    <a mat-stroked-button color="primary" routerLink="/contas/nova">
+      Cadastrar primeira conta
+    </a>
+  </div>
+} @else {
+  <table mat-table [dataSource]="contas()" class="tabela-contas">
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let conta">{{ conta.nome }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="tipo">
+      <th mat-header-cell *matHeaderCellDef>Tipo</th>
+      <td mat-cell *matCellDef="let conta">{{ conta.tipo | tipoContaLabel }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="saldoInicial">
+      <th mat-header-cell *matHeaderCellDef>Saldo inicial</th>
+      <td mat-cell *matCellDef="let conta">
+        {{ conta.saldoInicial | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cor">
+      <th mat-header-cell *matHeaderCellDef>Cor</th>
+      <td mat-cell *matCellDef="let conta">
+        @if (conta.cor) {
+          <span class="amostra-cor" [style.background-color]="conta.cor"></span>
+        }
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acoes">
+      <th mat-header-cell *matHeaderCellDef>Ações</th>
+      <td mat-cell *matCellDef="let conta">
+        <button mat-icon-button (click)="editar(conta)" aria-label="Editar conta">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="desativar(conta)"
+          aria-label="Desativar conta"
+        >
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="colunasExibidas"></tr>
+    <tr mat-row *matRowDef="let row; columns: colunasExibidas"></tr>
+  </table>
+}

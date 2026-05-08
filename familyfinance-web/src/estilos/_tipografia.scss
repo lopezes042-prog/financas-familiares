@@ -1,0 +1,85 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// TIPOGRAFIA — FamilyFinance · Tema Halloween
+// ─────────────────────────────────────────────────────────────────────────────
+@use 'tokens' as *;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $fonte-principal;
+  font-size: $tamanho-base;
+  color: $cor-texto-primario;
+  background-color: $cor-fundo-app;
+  line-height: $altura-linha-normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: $peso-semi;
+  color: $cor-texto-primario;
+  line-height: 1.25;
+}
+
+h1 { font-size: $tamanho-2xl; }
+h2 { font-size: $tamanho-xl; }
+h3 { font-size: $tamanho-lg; }
+h4, h5, h6 { font-size: $tamanho-base; }
+
+p {
+  margin: 0 0 $espaco-4;
+  line-height: $altura-linha-relaxada;
+  color: $cor-texto-secundario;
+}
+
+// ── Classes utilitárias de texto ──────────────────────────────────────────────
+.ff-texto-xs       { font-size: $tamanho-xs; }
+.ff-texto-sm       { font-size: $tamanho-sm; }
+.ff-texto-base     { font-size: $tamanho-base; }
+.ff-texto-lg       { font-size: $tamanho-lg; }
+.ff-texto-xl       { font-size: $tamanho-xl; }
+
+.ff-peso-regular   { font-weight: $peso-regular; }
+.ff-peso-medio     { font-weight: $peso-medio; }
+.ff-peso-semi      { font-weight: $peso-semi; }
+.ff-peso-bold      { font-weight: $peso-bold; }
+
+.ff-texto-primario    { color: $cor-texto-primario; }
+.ff-texto-secundario  { color: $cor-texto-secundario; }
+.ff-texto-desabilitado { color: $cor-texto-desabilitado; }
+.ff-texto-laranja     { color: $cor-primaria; }
+.ff-texto-roxo        { color: $cor-acento; }
+.ff-texto-ambar       { color: $cor-ambar; }
+
+.ff-texto-receita      { color: $cor-receita; }
+.ff-texto-despesa      { color: $cor-despesa; }
+.ff-texto-investimento { color: $cor-investimento; }
+.ff-texto-meta         { color: $cor-meta; }
+
+.ff-mono {
+  font-family: $fonte-mono;
+  font-size: 0.9em;
+  letter-spacing: 0.02em;
+}
+
+.ff-label {
+  display: block;
+  font-size: $tamanho-xs;
+  font-weight: $peso-medio;
+  color: $cor-texto-secundario;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: $espaco-1;
+}
+
+code {
+  font-family: $fonte-mono;
+  font-size: 0.875em;
+  color: $cor-primaria;
+  background: $cor-fundo-code;
+  padding: 2px 6px;
+  border-radius: $raio-sm;
+  border: 1px solid $cor-borda;
+}

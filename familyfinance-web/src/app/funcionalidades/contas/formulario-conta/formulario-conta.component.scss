@@ -1,0 +1,37 @@
+@use '../../../../estilos/tokens' as *;
+
+.cabecalho-pagina {
+  margin-bottom: $espaco-6;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.area-carregando {
+  display: flex;
+  justify-content: center;
+  padding: $espaco-12 0;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-4;
+  max-width: 480px;
+  background-color: $cor-fundo-cartao;
+  border: $borda-padrao;
+  border-radius: $raio-md;
+  padding: $espaco-6;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: $espaco-2;
+    margin-top: $espaco-2;
+  }
+}

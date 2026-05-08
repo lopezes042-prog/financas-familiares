@@ -1,0 +1,44 @@
+@use '../../../estilos/tokens' as *;
+
+.container-layout {
+  height: 100vh;
+}
+
+.menu-lateral {
+  width: $largura-sidenav;
+  background-color: $cor-fundo-sidenav;
+  color: $cor-texto-primario;
+
+  .cabecalho-menu {
+    padding: $espaco-6 $espaco-5;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    h2 {
+      margin: 0;
+      font-size: $tamanho-xl;
+      font-weight: $peso-semi;
+    }
+
+    small {
+      opacity: 0.7;
+      font-size: $tamanho-xs;
+    }
+  }
+
+  ::ng-deep .mat-mdc-list-item {
+    color: $cor-texto-primario !important;
+
+    &.ativo {
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .mat-icon {
+      color: $cor-texto-primario;
+    }
+  }
+}
+
+.area-conteudo {
+  padding: $espaco-6 $espaco-8;
+  background-color: $cor-fundo-app;
+}

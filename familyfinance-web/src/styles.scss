@@ -1,0 +1,17 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// ENTRY POINT — importa o design system na ordem correta
+// ─────────────────────────────────────────────────────────────────────────────
+
+@use 'estilos/tokens';      // 1. variáveis base
+@use 'estilos/tema';        // 2. Angular Material M3 dark (depends on tokens via CSS vars)
+@use 'estilos/tipografia';  // 3. escala tipográfica e classes ff-texto-*
+@use 'estilos/utilitarios'; // 4. classes single-purpose ff-*
+@use 'estilos/layout';      // 5. estrutura ff-app-shell, ff-sidenav
+@use 'estilos/componentes'; // 6. overrides Material + ff-card, ff-tabela-container
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}

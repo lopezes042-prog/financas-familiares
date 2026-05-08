@@ -1,0 +1,28 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// TEMA ANGULAR MATERIAL — FamilyFinance · Halloween (dark)
+// Angular Material M3 com cores customizadas.
+// ─────────────────────────────────────────────────────────────────────────────
+@use '@angular/material' as mat;
+
+// Define o tema M3 dark com a cor primária laranja e terciária roxo
+$tema-familyfinance: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$orange-palette,
+    tertiary: mat.$violet-palette
+  ),
+  typography: (
+    brand-family: 'Roboto, sans-serif',
+    bold-weight: 700,
+    medium-weight: 500,
+    regular-weight: 400
+  ),
+  density: (
+    scale: 0
+  )
+));
+
+// Aplica o tema globalmente
+html {
+  @include mat.all-component-themes($tema-familyfinance);
+}

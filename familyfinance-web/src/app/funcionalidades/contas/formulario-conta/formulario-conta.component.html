@@ -1,0 +1,66 @@
+<div class="cabecalho-pagina">
+  <h1>{{ modoEdicao() ? 'Editar conta' : 'Nova conta' }}</h1>
+</div>
+
+@if (carregando()) {
+  <div class="area-carregando">
+    <mat-spinner diameter="40" />
+  </div>
+} @else {
+  <form [formGroup]="formulario" (ngSubmit)="salvar()" class="formulario">
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" maxlength="100" />
+      @if (formulario.controls.nome.hasError('required') && formulario.controls.nome.touched) {
+        <mat-error>O nome é obrigatório.</mat-error>
+      }
+      @if (formulario.controls.nome.hasError('minlength')) {
+        <mat-error>O nome deve ter no mínimo 2 caracteres.</mat-error>
+      }
+      @if (formulario.controls.nome.hasError('maxlength')) {
+        <mat-error>O nome deve ter no máximo 100 caracteres.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="tipo">
+        @for (tipo of tiposConta; track tipo.valor) {
+          <mat-option [value]="tipo.valor">{{ tipo.rotulo }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Saldo inicial</mat-label>
+      <input matInput type="number" formControlName="saldoInicial" step="0.01" min="0" />
+      @if (formulario.controls.saldoInicial.hasError('min')) {
+        <mat-error>O saldo inicial não pode ser negativo.</mat-error>
+      }
+      @if (modoEdicao()) {
+        <mat-hint>O saldo inicial não pode ser alterado após a criação.</mat-hint>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Cor</mat-label>
+      <input matInput type="color" formControlName="cor" />
+    </mat-form-field>
+
+    <div class="acoes">
+      <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+      <!--
+        🐛 BUG-INTENCIONAL-06
+        O atributo `type` está como "button". Em formulários, o botão de submit
+          deve ser type="submit" para que pressionar Enter funcione e o evento ngSubmit
+          dispare corretamente.
+        Sintoma esperado: ao clicar no botão "Salvar", nada acontece (o método salvar()
+          nunca é chamado por essa via). Funciona apenas pressionando Enter num input.
+        Correção: alterar para type="submit".
+      -->
+      <button mat-raised-button color="primary" type="button">
+        {{ modoEdicao() ? 'Atualizar' : 'Salvar' }}
+      </button>
+    </div>
+  </form>
+}

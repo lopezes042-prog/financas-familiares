@@ -1,0 +1,123 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// COMPONENTES — FamilyFinance · Overrides Material + componentes ff-*
+// REGRA: ::ng-deep SOMENTE aqui. Nunca em arquivos de componente individuais.
+// ─────────────────────────────────────────────────────────────────────────────
+@use 'tokens' as *;
+
+// ── Card ──────────────────────────────────────────────────────────────────────
+.ff-card {
+  background-color: $cor-fundo-cartao;
+  border: $borda-padrao;
+  border-radius: $raio-md;
+  padding: $espaco-6;
+  box-shadow: $sombra-sm;
+  transition: box-shadow $transicao-rapida, border-color $transicao-rapida;
+
+  &:hover {
+    border-color: $cor-primaria;
+    box-shadow: $sombra-brilho-laranja;
+  }
+
+  &--flat {
+    box-shadow: none;
+    &:hover { box-shadow: none; }
+  }
+
+  &--acento:hover {
+    border-color: $cor-acento;
+    box-shadow: $sombra-brilho-roxo;
+  }
+
+  &__titulo {
+    font-size: $tamanho-base;
+    font-weight: $peso-semi;
+    color: $cor-texto-primario;
+    margin: 0 0 $espaco-4;
+    padding-bottom: $espaco-4;
+    border-bottom: 1px solid $cor-divisor;
+  }
+}
+
+// ── Tabela ────────────────────────────────────────────────────────────────────
+.ff-tabela-container {
+  background-color: $cor-fundo-cartao;
+  border: $borda-padrao;
+  border-radius: $raio-md;
+  overflow: hidden;
+  box-shadow: $sombra-sm;
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+}
+
+// ── Formulário ────────────────────────────────────────────────────────────────
+.ff-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: $espaco-4;
+  max-width: 480px;
+  background-color: $cor-fundo-cartao;
+  border: $borda-padrao;
+  border-radius: $raio-md;
+  padding: $espaco-6;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  &__acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: $espaco-2;
+    margin-top: $espaco-2;
+  }
+}
+
+// ── Amostra de cor ────────────────────────────────────────────────────────────
+.ff-amostra-cor {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid $cor-borda;
+  vertical-align: middle;
+}
+
+// ── Snackbar de erro ──────────────────────────────────────────────────────────
+.snackbar-erro .mat-mdc-snack-bar-label {
+  color: $cor-despesa !important;
+}
+
+// ── Overrides Material globais ────────────────────────────────────────────────
+::ng-deep {
+  // Form fields no tema dark
+  .mat-mdc-form-field {
+    --mdc-filled-text-field-container-color: #{$cor-fundo-elevado};
+  }
+
+  // Tabela
+  .mat-mdc-header-cell {
+    font-size: $tamanho-xs !important;
+    font-weight: $peso-semi !important;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: $cor-texto-desabilitado !important;
+    background-color: $cor-fundo-elevado !important;
+    border-bottom: 1px solid $cor-borda !important;
+    white-space: nowrap;
+  }
+
+  .mat-mdc-cell {
+    font-size: $tamanho-sm !important;
+    color: $cor-texto-primario !important;
+    border-bottom: 1px solid $cor-divisor !important;
+    vertical-align: middle;
+  }
+
+  .mat-mdc-row:hover {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+  }
+}

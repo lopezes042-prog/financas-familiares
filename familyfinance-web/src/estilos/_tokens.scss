@@ -1,0 +1,103 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// DESIGN TOKENS — FamilyFinance · Tema Halloween (dark)
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ── Cores principais ──────────────────────────────────────────────────────────
+$cor-primaria:          #ff6b00; // laranja
+$cor-primaria-hover:    #e85e00;
+$cor-primaria-suave:    rgba(255, 107, 0, 0.12);
+$cor-acento:            #7c3aed; // roxo
+$cor-acento-hover:      #6d28d9;
+$cor-acento-suave:      rgba(124, 58, 237, 0.12);
+
+// ── Cores semânticas ──────────────────────────────────────────────────────────
+$cor-receita:           #22c55e;
+$cor-receita-suave:     rgba(34, 197, 94, 0.12);
+$cor-despesa:           #ef4444;
+$cor-despesa-suave:     rgba(239, 68, 68, 0.12);
+$cor-investimento:      #3b82f6;
+$cor-investimento-suave: rgba(59, 130, 246, 0.12);
+$cor-meta:              #f59e0b;
+$cor-meta-suave:        rgba(245, 158, 11, 0.12);
+$cor-ambar:             #f59e0b;
+
+// ── Fundo (dark) ─────────────────────────────────────────────────────────────
+$cor-fundo-app:         #0f172a;
+$cor-fundo-sidenav:     #1e2a3b;
+$cor-fundo-cartao:      #1e293b;
+$cor-fundo-elevado:     #263548;
+$cor-fundo-code:        rgba(255, 107, 0, 0.08);
+
+// ── Texto ────────────────────────────────────────────────────────────────────
+$cor-texto-primario:    #f1f5f9;
+$cor-texto-secundario:  #94a3b8;
+$cor-texto-desabilitado: #475569;
+
+// ── Bordas e divisores ────────────────────────────────────────────────────────
+$cor-borda:             #2d3f55;
+$cor-divisor:           rgba(255, 255, 255, 0.06);
+$borda-padrao:          1px solid $cor-borda;
+
+// ── Espaçamentos (escala 4px) ─────────────────────────────────────────────────
+$espaco-1:  4px;
+$espaco-2:  8px;
+$espaco-3:  12px;
+$espaco-4:  16px;
+$espaco-5:  20px;
+$espaco-6:  24px;
+$espaco-8:  32px;
+$espaco-10: 40px;
+$espaco-12: 48px;
+$espaco-16: 64px;
+
+// ── Bordas arredondadas ───────────────────────────────────────────────────────
+$raio-sm:   4px;
+$raio-md:   8px;
+$raio-lg:   12px;
+$raio-xl:   16px;
+$raio-full: 9999px;
+
+// ── Sombras ───────────────────────────────────────────────────────────────────
+$sombra-sm:            0 1px 3px rgba(0, 0, 0, 0.4);
+$sombra-md:            0 4px 12px rgba(0, 0, 0, 0.5);
+$sombra-brilho-laranja: 0 0 12px rgba(255, 107, 0, 0.3);
+$sombra-brilho-roxo:   0 0 12px rgba(124, 58, 237, 0.3);
+
+// ── Tipografia ────────────────────────────────────────────────────────────────
+$fonte-principal: 'Roboto', sans-serif;
+$fonte-mono:      'Roboto Mono', 'Courier New', monospace;
+
+$tamanho-xs:   0.75rem;  // 12px
+$tamanho-sm:   0.875rem; // 14px
+$tamanho-base: 1rem;     // 16px
+$tamanho-lg:   1.125rem; // 18px
+$tamanho-xl:   1.25rem;  // 20px
+$tamanho-2xl:  1.5rem;   // 24px
+
+$peso-regular: 400;
+$peso-medio:   500;
+$peso-semi:    600;
+$peso-bold:    700;
+
+$altura-linha-normal:   1.5;
+$altura-linha-relaxada: 1.75;
+
+// ── Layout ────────────────────────────────────────────────────────────────────
+$largura-sidenav:          260px;
+$largura-sidenav-recolhida: 64px;
+
+// ── Breakpoints ───────────────────────────────────────────────────────────────
+$bp-sm:  640px;
+$bp-md:  768px;
+$bp-lg:  1024px;
+$bp-xl:  1280px;
+
+// ── Z-Index ───────────────────────────────────────────────────────────────────
+$z-base:    0;
+$z-elevado: 10;
+$z-overlay: 100;
+$z-modal:   200;
+
+// ── Transições ────────────────────────────────────────────────────────────────
+$transicao-rapida:  150ms ease;
+$transicao-padrao:  250ms ease;

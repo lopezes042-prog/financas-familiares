@@ -1,0 +1,52 @@
+@use '../../../../estilos/tokens' as *;
+
+.cabecalho-pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $espaco-6;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.area-carregando {
+  display: flex;
+  justify-content: center;
+  padding: $espaco-12 0;
+}
+
+.estado-vazio {
+  text-align: center;
+  padding: $espaco-16 $espaco-6;
+  background: $cor-fundo-cartao;
+  border-radius: $raio-md;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: $cor-texto-desabilitado;
+  }
+
+  p {
+    color: $cor-texto-secundario;
+    margin: $espaco-4 0 $espaco-6;
+  }
+}
+
+.tabela-contas {
+  width: 100%;
+  background: $cor-fundo-cartao;
+  border-radius: $raio-md;
+  overflow: hidden;
+}
+
+.amostra-cor {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: $raio-full;
+  border: $borda-padrao;
+}

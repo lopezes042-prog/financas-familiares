@@ -1,0 +1,119 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// LAYOUT — FamilyFinance · Estrutura geral, sidenav, área de conteúdo
+// ─────────────────────────────────────────────────────────────────────────────
+@use 'tokens' as *;
+
+// ── Breakpoints ───────────────────────────────────────────────────────────────
+@mixin tela-sm  { @media (max-width: #{$bp-sm})  { @content; } }
+@mixin tela-md  { @media (max-width: #{$bp-md})  { @content; } }
+@mixin tela-lg  { @media (max-width: #{$bp-lg})  { @content; } }
+@mixin acima-de($bp) { @media (min-width: $bp) { @content; } }
+
+// ── App shell ─────────────────────────────────────────────────────────────────
+.ff-app-shell {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background-color: $cor-fundo-app;
+}
+
+// ── Sidenav ───────────────────────────────────────────────────────────────────
+.ff-sidenav {
+  width: $largura-sidenav;
+  flex-shrink: 0;
+  background-color: $cor-fundo-sidenav;
+  border-right: 1px solid $cor-borda;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: width $transicao-padrao;
+
+  &--recolhido {
+    width: $largura-sidenav-recolhida;
+  }
+
+  @include tela-md {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    z-index: $z-overlay;
+
+    &--fechado {
+      transform: translateX(-100%);
+    }
+  }
+}
+
+.ff-sidenav__cabecalho {
+  padding: $espaco-6 $espaco-5;
+  border-bottom: 1px solid $cor-borda;
+  flex-shrink: 0;
+
+  .ff-sidenav__logo {
+    font-size: $tamanho-xl;
+    font-weight: $peso-bold;
+    color: $cor-primaria;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .ff-sidenav__subtitulo {
+    font-size: $tamanho-xs;
+    color: $cor-texto-desabilitado;
+    margin-top: $espaco-1;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+.ff-sidenav__nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: $espaco-2 0;
+}
+
+// ── Área de conteúdo ──────────────────────────────────────────────────────────
+.ff-conteudo {
+  flex: 1;
+  overflow-y: auto;
+  padding: $espaco-6 $espaco-8;
+  background-color: $cor-fundo-app;
+
+  @include tela-md {
+    padding: $espaco-4;
+  }
+}
+
+// ── Cabeçalho de página ───────────────────────────────────────────────────────
+.ff-cabecalho-pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $espaco-6;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+// ── Estado de carregamento ────────────────────────────────────────────────────
+.ff-area-carregando {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $espaco-12 0;
+}
+
+// ── Estado vazio ──────────────────────────────────────────────────────────────
+.ff-estado-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $espaco-16 $espaco-6;
+  gap: $espaco-4;
+  color: $cor-texto-secundario;
+  font-size: $tamanho-sm;
+  text-align: center;
+}

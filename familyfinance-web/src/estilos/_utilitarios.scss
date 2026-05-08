@@ -1,0 +1,62 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// UTILITÁRIOS — FamilyFinance · classes single-purpose ff-*
+// ─────────────────────────────────────────────────────────────────────────────
+@use 'tokens' as *;
+
+// ── Display ───────────────────────────────────────────────────────────────────
+.ff-flex         { display: flex; }
+.ff-flex-col     { display: flex; flex-direction: column; }
+.ff-inline-flex  { display: inline-flex; }
+.ff-grid         { display: grid; }
+.ff-oculto       { display: none; }
+
+// ── Flexbox helpers ───────────────────────────────────────────────────────────
+.ff-items-center    { align-items: center; }
+.ff-items-start     { align-items: flex-start; }
+.ff-justify-between { justify-content: space-between; }
+.ff-justify-center  { justify-content: center; }
+.ff-justify-end     { justify-content: flex-end; }
+.ff-flex-1          { flex: 1; }
+.ff-flex-auto       { flex: auto; }
+.ff-flex-wrap       { flex-wrap: wrap; }
+
+// ── Gap ───────────────────────────────────────────────────────────────────────
+.ff-gap-1  { gap: $espaco-1; }
+.ff-gap-2  { gap: $espaco-2; }
+.ff-gap-3  { gap: $espaco-3; }
+.ff-gap-4  { gap: $espaco-4; }
+.ff-gap-6  { gap: $espaco-6; }
+.ff-gap-8  { gap: $espaco-8; }
+
+// ── Largura / altura ──────────────────────────────────────────────────────────
+.ff-w-full   { width: 100%; }
+.ff-h-full   { height: 100%; }
+.ff-min-h-screen { min-height: 100vh; }
+
+// ── Padding ───────────────────────────────────────────────────────────────────
+.ff-p-4  { padding: $espaco-4; }
+.ff-p-6  { padding: $espaco-6; }
+.ff-px-4 { padding-left: $espaco-4; padding-right: $espaco-4; }
+.ff-py-4 { padding-top: $espaco-4; padding-bottom: $espaco-4; }
+
+// ── Margin ────────────────────────────────────────────────────────────────────
+.ff-mt-4  { margin-top: $espaco-4; }
+.ff-mt-6  { margin-top: $espaco-6; }
+.ff-mb-4  { margin-bottom: $espaco-4; }
+.ff-mb-6  { margin-bottom: $espaco-6; }
+.ff-mx-auto { margin-left: auto; margin-right: auto; }
+
+// ── Text align ───────────────────────────────────────────────────────────────
+.ff-text-center { text-align: center; }
+.ff-text-right  { text-align: right; }
+
+// ── Overflow ─────────────────────────────────────────────────────────────────
+.ff-overflow-hidden { overflow: hidden; }
+.ff-overflow-auto   { overflow: auto; }
+
+// ── Divisor ───────────────────────────────────────────────────────────────────
+.ff-divisor {
+  border: none;
+  border-top: 1px solid $cor-divisor;
+  margin: $espaco-6 0;
+}

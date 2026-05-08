@@ -1,0 +1,19 @@
+<mat-sidenav-container class="container-layout">
+  <mat-sidenav mode="side" opened class="menu-lateral">
+    <div class="cabecalho-menu">
+      <h2>FamilyFinance</h2>
+      <small>Gestão financeira familiar</small>
+    </div>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="/contas" routerLinkActive="ativo">
+        <mat-icon matListItemIcon>account_balance_wallet</mat-icon>
+        <span matListItemTitle>Contas</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="area-conteudo">
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>
