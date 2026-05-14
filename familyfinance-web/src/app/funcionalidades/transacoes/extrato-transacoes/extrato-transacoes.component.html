@@ -1,0 +1,161 @@
+<div class="cabecalho-pagina">
+  <h1>Transações</h1>
+  <a mat-raised-button color="primary" routerLink="/transacoes/nova">
+    <mat-icon>add</mat-icon>
+    Nova transação
+  </a>
+</div>
+
+<div class="filtros">
+  <mat-form-field appearance="outline" class="seletor-conta">
+    <mat-label>Conta</mat-label>
+    <mat-select [ngModel]="contaSelecionada()" (ngModelChange)="selecionarConta($event)">
+      <mat-option [value]="null">Selecione uma conta</mat-option>
+      @for (conta of contas(); track conta.id) {
+        <mat-option [value]="conta">{{ conta.nome }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  @if (contaSelecionada()) {
+    <div class="chips-tipo">
+      <button
+        mat-stroked-button
+        [class.ativo]="tipoFiltro() === null"
+        (click)="filtrarPorTipo(null)"
+      >
+        Todos
+      </button>
+      <button
+        mat-stroked-button
+        [class.ativo]="tipoFiltro() === 'RECEITA'"
+        (click)="filtrarPorTipo('RECEITA')"
+      >
+        Receitas
+      </button>
+      <button
+        mat-stroked-button
+        [class.ativo]="tipoFiltro() === 'DESPESA'"
+        (click)="filtrarPorTipo('DESPESA')"
+      >
+        Despesas
+      </button>
+    </div>
+  }
+</div>
+
+@if (contaSelecionada()) {
+  <div class="cabecalho-extrato">
+    <div class="info-conta">
+      <span class="nome-conta">{{ contaSelecionada()!.nome }}</span>
+      <span class="saldo-atual">
+        Saldo: {{ contaSelecionada()!.saldoAtual | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
+      </span>
+    </div>
+  </div>
+}
+
+@if (carregando()) {
+  <div class="area-carregando">
+    <mat-spinner diameter="40" />
+  </div>
+} @else if (!contaSelecionada()) {
+  <div class="estado-vazio">
+    <mat-icon>receipt_long</mat-icon>
+    <p>Selecione uma conta para ver as transações.</p>
+  </div>
+} @else if (transacoes().length === 0) {
+  <div class="estado-vazio">
+    <mat-icon>inbox</mat-icon>
+    <p>Nenhuma transação encontrada.</p>
+    <a mat-stroked-button color="primary" routerLink="/transacoes/nova">
+      Registrar primeira transação
+    </a>
+  </div>
+} @else {
+  <div class="info-total">
+    {{ totalTransacoes() }} transação(ões)
+  </div>
+
+  <table mat-table [dataSource]="transacoes()" class="tabela-transacoes">
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let transacao">
+        @if (transacao.efetivada) {
+          <mat-icon class="icone-efetivada" title="Efetivada">check_circle</mat-icon>
+        } @else {
+          <mat-icon class="icone-pendente" title="Pendente">schedule</mat-icon>
+        }
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dataLancamento">
+      <th mat-header-cell *matHeaderCellDef>Data</th>
+      <td mat-cell *matCellDef="let transacao">
+        {{ transacao.dataLancamento | date: 'dd/MM/yyyy' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="descricao">
+      <th mat-header-cell *matHeaderCellDef>Descrição</th>
+      <td mat-cell *matCellDef="let transacao">{{ transacao.descricao }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="categoria">
+      <th mat-header-cell *matHeaderCellDef>Categoria</th>
+      <td mat-cell *matCellDef="let transacao">
+        {{ transacao.categoria?.nome ?? 'Sem categoria' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="valor">
+      <th mat-header-cell *matHeaderCellDef>Valor</th>
+      <td mat-cell *matCellDef="let transacao">
+        <!-- BUG-T-03: classes de cor invertidas — RECEITA usa classe de despesa e vice-versa -->
+        <span
+          [class.ff-valor-despesa]="transacao.tipo === 'RECEITA'"
+          [class.ff-valor-receita]="transacao.tipo === 'DESPESA'"
+        >
+          {{ transacao.valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
+        </span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acoes">
+      <th mat-header-cell *matHeaderCellDef>Ações</th>
+      <td mat-cell *matCellDef="let transacao" class="coluna-acoes">
+        @if (!transacao.efetivada) {
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="efetivar(transacao)"
+            title="Efetivar"
+          >
+            <mat-icon>check_circle_outline</mat-icon>
+          </button>
+        } @else {
+          <button
+            mat-icon-button
+            (click)="desefetivar(transacao)"
+            title="Desfazer efetivação"
+          >
+            <mat-icon>unpublished</mat-icon>
+          </button>
+        }
+        <button mat-icon-button (click)="editar(transacao)" title="Editar">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="desativar(transacao)" title="Excluir">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="colunasExibidas"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: colunasExibidas"
+      [class.ff-transacao--pendente]="!row.efetivada"
+    ></tr>
+  </table>
+}

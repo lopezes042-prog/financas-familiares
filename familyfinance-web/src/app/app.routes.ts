@@ -33,6 +33,48 @@ export const rotas: Routes = [
           import('./funcionalidades/contas/formulario-conta/formulario-conta.component').then(
             (m) => m.FormularioContaComponent
           )
+      },
+      {
+        path: 'categorias',
+        loadComponent: () =>
+          import('./funcionalidades/categorias/lista-categorias/lista-categorias.component').then(
+            (m) => m.ListaCategoriasComponent
+          )
+      },
+      {
+        path: 'categorias/nova',
+        loadComponent: () =>
+          import('./funcionalidades/categorias/formulario-categoria/formulario-categoria.component').then(
+            (m) => m.FormularioCategoriaComponent
+          )
+      },
+      {
+        path: 'categorias/:id/editar',
+        loadComponent: () =>
+          import('./funcionalidades/categorias/formulario-categoria/formulario-categoria.component').then(
+            (m) => m.FormularioCategoriaComponent
+          )
+      },
+      {
+        path: 'transacoes',
+        loadComponent: () =>
+          import('./funcionalidades/transacoes/extrato-transacoes/extrato-transacoes.component').then(
+            (m) => m.ExtratoTransacoesComponent
+          )
+      },
+      {
+        path: 'transacoes/nova',
+        loadComponent: () =>
+          import('./funcionalidades/transacoes/formulario-transacao/formulario-transacao.component').then(
+            (m) => m.FormularioTransacaoComponent
+          )
+      },
+      {
+        path: 'transacoes/:id/editar',
+        loadComponent: () =>
+          import('./funcionalidades/transacoes/formulario-transacao/formulario-transacao.component').then(
+            (m) => m.FormularioTransacaoComponent
+          )
       }
     ]
   },

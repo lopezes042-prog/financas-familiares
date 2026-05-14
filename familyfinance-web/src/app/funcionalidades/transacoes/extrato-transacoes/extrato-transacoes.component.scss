@@ -1,0 +1,80 @@
+.filtros {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.seletor-conta {
+  min-width: 240px;
+}
+
+.chips-tipo {
+  display: flex;
+  gap: 8px;
+
+  button.ativo {
+    background-color: rgba(255, 107, 0, 0.15);
+    color: #ff6b00;
+    border-color: #ff6b00;
+  }
+}
+
+.cabecalho-extrato {
+  margin-bottom: 16px;
+}
+
+.info-conta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nome-conta {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.saldo-atual {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.info-total {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+.icone-efetivada {
+  color: #22c55e;
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+.icone-pendente {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+.ff-transacao--pendente td {
+  opacity: 0.6;
+}
+
+.ff-valor-receita {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.ff-valor-despesa {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.coluna-acoes {
+  white-space: nowrap;
+}

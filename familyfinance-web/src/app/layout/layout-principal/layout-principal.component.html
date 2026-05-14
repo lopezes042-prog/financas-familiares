@@ -6,9 +6,17 @@
     </div>
 
     <mat-nav-list>
+      <a mat-list-item routerLink="/transacoes" routerLinkActive="ativo">
+        <mat-icon matListItemIcon>receipt_long</mat-icon>
+        <span matListItemTitle>Transações</span>
+      </a>
       <a mat-list-item routerLink="/contas" routerLinkActive="ativo">
         <mat-icon matListItemIcon>account_balance_wallet</mat-icon>
         <span matListItemTitle>Contas</span>
+      </a>
+      <a mat-list-item routerLink="/categorias" routerLinkActive="ativo">
+        <mat-icon matListItemIcon>folder</mat-icon>
+        <span matListItemTitle>Categorias</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
