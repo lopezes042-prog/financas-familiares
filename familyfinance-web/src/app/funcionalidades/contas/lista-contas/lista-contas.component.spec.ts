@@ -120,9 +120,6 @@ describe('ListaContasComponent', () => {
   });
 
   it('deve exibir spinner enquanto a requisição está pendente', () => {
-    // Verifica que carregando=true durante o intervalo entre a chamada e a resposta.
-    // Nota BUG-03: o callback error está ausente no subscribe de carregarContas().
-    // Quando o BUG-03 for corrigido, adicionar teste que verifica carregando=false após erro.
     const pendente$ = new Subject<Conta[]>();
     contaServicoMock.listar = vi.fn().mockReturnValue(pendente$.asObservable());
 
@@ -130,5 +127,17 @@ describe('ListaContasComponent', () => {
 
     expect(component.carregando()).toBe(true);
     pendente$.complete();
+  });
+
+  it('deve parar o spinner após erro na requisição', () => {
+    const pendente$ = new Subject<Conta[]>();
+    contaServicoMock.listar = vi.fn().mockReturnValue(pendente$.asObservable());
+
+    fixture.detectChanges();
+
+    expect(component.carregando()).toBe(true);
+    pendente$.error(new Error('falha HTTP'));
+
+    expect(component.carregando()).toBe(false);
   });
 });

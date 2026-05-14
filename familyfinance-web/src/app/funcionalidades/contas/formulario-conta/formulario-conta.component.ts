@@ -44,14 +44,8 @@ export class FormularioContaComponent implements OnInit {
   readonly carregando = signal<boolean>(false);
   readonly idConta = signal<string | null>(null);
 
-  // 🐛 BUG-INTENCIONAL-04
-  // O validador `Validators.minLength(2)` está faltando.
-  // O contrato exige nome com 2-100 caracteres.
-  // Sintoma esperado: a Júnior consegue salvar uma conta com nome "A" pelo frontend,
-  //   mas o backend retorna 400 com a mensagem de validação.
-  // Correção: adicionar Validators.minLength(2) na lista de validadores do nome.
   readonly formulario = this.fb.nonNullable.group({
-    nome: ['', [Validators.required, Validators.maxLength(100)]],
+    nome: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
     tipo: ['CORRENTE' as TipoConta, [Validators.required]],
     saldoInicial: [0, [Validators.required, Validators.min(0)]],
     cor: ['']
@@ -121,17 +115,11 @@ export class FormularioContaComponent implements OnInit {
     const id = this.idConta();
     if (!id) return;
 
-    // 🐛 BUG-INTENCIONAL-05
-    // O comando de edição inclui `saldoInicial`, mas o contrato (EditarContaComando)
-    //   não aceita esse campo — saldoInicial não é editável após criação.
-    // Sintoma esperado: o backend pode retornar erro ou ignorar silenciosamente.
-    // Correção: remover `saldoInicial` do objeto enviado.
-    const comando = {
+    const comando: EditarContaComando = {
       nome: valor.nome,
       tipo: valor.tipo,
-      saldoInicial: valor.saldoInicial,
       cor: valor.cor || undefined
-    } as EditarContaComando;
+    };
 
     this.contaServico.atualizar(id, comando).subscribe({
       next: () => {

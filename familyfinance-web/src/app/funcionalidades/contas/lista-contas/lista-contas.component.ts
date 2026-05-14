@@ -49,13 +49,8 @@ export class ListaContasComponent implements OnInit {
       next: (contas) => {
         this.contas.set(contas);
         this.carregando.set(false);
-      }
-      // 🐛 BUG-INTENCIONAL-03
-      // O callback de erro está faltando aqui.
-      // Sintoma esperado: quando a requisição falha, o spinner fica girando para sempre
-      //   e a Júnior só percebe pelo snackbar do interceptor.
-      // A Júnior deve adicionar o callback `error` que ao menos chama
-      //   `this.carregando.set(false)`.
+      },
+      error: () => this.carregando.set(false)
     });
   }
 

@@ -49,16 +49,7 @@
 
     <div class="acoes">
       <button mat-button type="button" (click)="cancelar()">Cancelar</button>
-      <!--
-        🐛 BUG-INTENCIONAL-06
-        O atributo `type` está como "button". Em formulários, o botão de submit
-          deve ser type="submit" para que pressionar Enter funcione e o evento ngSubmit
-          dispare corretamente.
-        Sintoma esperado: ao clicar no botão "Salvar", nada acontece (o método salvar()
-          nunca é chamado por essa via). Funciona apenas pressionando Enter num input.
-        Correção: alterar para type="submit".
-      -->
-      <button mat-raised-button color="primary" type="button">
+      <button mat-raised-button color="primary" type="submit">
         {{ modoEdicao() ? 'Atualizar' : 'Salvar' }}
       </button>
     </div>
