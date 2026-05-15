@@ -10,6 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { CategoriaServico } from '../../../nucleo/servicos/categoria.servico';
+import { CategoriaEstadoServico } from '../../../nucleo/estado/categoria-estado.servico';
 import {
   CriarCategoriaComando,
   EditarCategoriaComando,
@@ -35,6 +36,7 @@ import {
 export class FormularioCategoriaComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly categoriaServico = inject(CategoriaServico);
+  private readonly categoriaEstado = inject(CategoriaEstadoServico);
   private readonly rota = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
@@ -104,6 +106,7 @@ export class FormularioCategoriaComponent implements OnInit {
 
     this.categoriaServico.criar(comando).subscribe({
       next: () => {
+        this.categoriaEstado.recarregar();
         this.snackBar.open('Categoria criada com sucesso', 'Fechar', { duration: 3000 });
         this.router.navigate(['/categorias']);
       }
@@ -123,6 +126,7 @@ export class FormularioCategoriaComponent implements OnInit {
 
     this.categoriaServico.atualizar(id, comando).subscribe({
       next: () => {
+        this.categoriaEstado.recarregar();
         this.snackBar.open('Categoria atualizada com sucesso', 'Fechar', { duration: 3000 });
         this.router.navigate(['/categorias']);
       }

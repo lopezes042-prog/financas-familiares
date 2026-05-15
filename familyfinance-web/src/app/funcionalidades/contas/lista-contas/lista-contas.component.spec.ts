@@ -5,7 +5,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { LOCALE_ID } from '@angular/core';
+import { LOCALE_ID, signal } from '@angular/core';
 import { of, Subject } from 'rxjs';
 import { vi } from 'vitest';
 import { registerLocaleData } from '@angular/common';
@@ -13,6 +13,7 @@ import localePt from '@angular/common/locales/pt';
 
 import { ListaContasComponent } from './lista-contas.component';
 import { ContaServico } from '../../../nucleo/servicos/conta.servico';
+import { ContaEstadoServico } from '../../../nucleo/estado/conta-estado.servico';
 import { Conta } from '../../../modelos/conta.modelo';
 
 registerLocaleData(localePt, 'pt-BR');
@@ -41,6 +42,12 @@ describe('ListaContasComponent', () => {
   let fixture: ComponentFixture<ListaContasComponent>;
   let component: ListaContasComponent;
   let contaServicoMock: Partial<ContaServico>;
+  const contaEstadoMock: Partial<ContaEstadoServico> = {
+    contas: signal([]),
+    carregando: signal(false),
+    garantirCarregado: vi.fn(),
+    recarregar: vi.fn()
+  };
 
   beforeEach(async () => {
     contaServicoMock = {
@@ -60,6 +67,7 @@ describe('ListaContasComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: ContaServico, useValue: contaServicoMock },
+        { provide: ContaEstadoServico, useValue: contaEstadoMock },
         { provide: LOCALE_ID, useValue: 'pt-BR' }
       ]
     }).compileComponents();
@@ -139,5 +147,11 @@ describe('ListaContasComponent', () => {
     pendente$.error(new Error('falha HTTP'));
 
     expect(component.carregando()).toBe(false);
+  });
+
+  it('deve navegar para a rota de edição ao chamar editar()', async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(() => component.editar(contasMock[0])).not.toThrow();
   });
 });

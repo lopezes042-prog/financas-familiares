@@ -11,7 +11,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Conta</mat-label>
       <mat-select formControlName="contaId">
-        @for (conta of contas(); track conta.id) {
+        @for (conta of contaEstado.contas(); track conta.id) {
           <mat-option [value]="conta.id">{{ conta.nome }}</mat-option>
         }
       </mat-select>
@@ -71,6 +71,18 @@
       </mat-select>
       <mat-hint>Exibe apenas categorias do tipo selecionado.</mat-hint>
     </mat-form-field>
+
+    @if (subcategorias().length > 0 || formulario.controls.subcategoriaId.value) {
+      <mat-form-field appearance="outline">
+        <mat-label>Subcategoria</mat-label>
+        <mat-select formControlName="subcategoriaId">
+          <mat-option [value]="null">Nenhuma</mat-option>
+          @for (sub of subcategorias(); track sub.id) {
+            <mat-option [value]="sub.id">{{ sub.nome }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
 
     <div class="campo-checkbox">
       <mat-checkbox formControlName="efetivada">

@@ -7,7 +7,7 @@
     "build": "ng build",
     "build:prod": "ng build --configuration=production",
     "test": "ng test",
-    "test:cobertura": "ng test --coverage --watch=false",
+    "test:cobertura": "ng test --configuration=ci",
     "lint": "ng lint",
     "format": "prettier --write \"src/**/*.{ts,html,scss,json}\"",
     "prepare": "husky"
@@ -39,6 +39,7 @@
     "@angular/build": "^21.2.6",
     "@angular/cli": "^21.2.6",
     "@angular/compiler-cli": "^21.2.0",
+    "@vitest/coverage-v8": "^4.1.6",
     "angular-eslint": "^21.0.0",
     "husky": "^9.1.7",
     "jsdom": "^28.0.0",

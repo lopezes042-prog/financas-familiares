@@ -14,6 +14,7 @@ import { MatChipsModule } from '@angular/material/chips';
 
 import { TransacaoServico } from '../../../nucleo/servicos/transacao.servico';
 import { ContaServico } from '../../../nucleo/servicos/conta.servico';
+import { ContaEstadoServico } from '../../../nucleo/estado/conta-estado.servico';
 import { Transacao, TipoTransacao } from '../../../modelos/transacao.modelo';
 import { Conta } from '../../../modelos/conta.modelo';
 import { ConfirmacaoDialogoComponent } from '../../../compartilhado/componentes/confirmacao-dialogo/confirmacao-dialogo.component';
@@ -41,35 +42,21 @@ import { ConfirmacaoDialogoComponent } from '../../../compartilhado/componentes/
 export class ExtratoTransacoesComponent implements OnInit {
   private readonly transacaoServico = inject(TransacaoServico);
   private readonly contaServico = inject(ContaServico);
+  readonly contaEstado = inject(ContaEstadoServico);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
 
-  readonly contas = signal<Conta[]>([]);
   readonly contaSelecionada = signal<Conta | null>(null);
   readonly transacoes = signal<Transacao[]>([]);
   readonly carregando = signal<boolean>(false);
-  readonly carregandoContas = signal<boolean>(false);
-  // BUG-T-08: tipoFiltro é atualizado mas nunca incluído nos FiltrosTransacao enviados ao serviço
   readonly tipoFiltro = signal<TipoTransacao | null>(null);
 
   readonly colunasExibidas = ['status', 'dataLancamento', 'descricao', 'categoria', 'valor', 'acoes'];
-
   readonly totalTransacoes = signal<number>(0);
 
   ngOnInit(): void {
-    this.carregarContas();
-  }
-
-  carregarContas(): void {
-    this.carregandoContas.set(true);
-    this.contaServico.listar().subscribe({
-      next: (contas) => {
-        this.contas.set(contas);
-        this.carregandoContas.set(false);
-      },
-      error: () => this.carregandoContas.set(false)
-    });
+    this.contaEstado.garantirCarregado();
   }
 
   selecionarConta(conta: Conta | null): void {
@@ -93,15 +80,17 @@ export class ExtratoTransacoesComponent implements OnInit {
     if (!conta) return;
 
     this.carregando.set(true);
-    // BUG-T-08: tipoFiltro é ignorado — o filtro de tipo não é enviado ao backend
-    this.transacaoServico.listar({ contaId: conta.id, tamanho: 50 }).subscribe({
+    const tipo = this.tipoFiltro();
+    const filtros = tipo
+      ? { contaId: conta.id, tamanho: 50, tipo }
+      : { contaId: conta.id, tamanho: 50 };
+    this.transacaoServico.listar(filtros).subscribe({
       next: (pagina) => {
         this.transacoes.set(pagina.conteudo);
         this.totalTransacoes.set(pagina.totalItens);
         this.carregando.set(false);
       },
-      // BUG-T-06: callback error ausente — spinner não para em caso de falha
-      complete: () => {}
+      error: () => this.carregando.set(false)
     });
   }
 
@@ -111,9 +100,7 @@ export class ExtratoTransacoesComponent implements OnInit {
     this.contaServico.buscarPorId(conta.id).subscribe({
       next: (contaAtualizada) => {
         this.contaSelecionada.set(contaAtualizada);
-        this.contas.update((lista) =>
-          lista.map((c) => (c.id === contaAtualizada.id ? contaAtualizada : c))
-        );
+        this.contaEstado.recarregar();
       }
     });
   }

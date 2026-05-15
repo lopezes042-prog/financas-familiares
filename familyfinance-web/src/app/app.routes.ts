@@ -56,6 +56,13 @@ export const rotas: Routes = [
           )
       },
       {
+        path: 'categorias/:categoriaId/subcategorias',
+        loadComponent: () =>
+          import('./funcionalidades/categorias/lista-subcategorias/lista-subcategorias.component').then(
+            (m) => m.ListaSubcategoriasComponent
+          )
+      },
+      {
         path: 'transacoes',
         loadComponent: () =>
           import('./funcionalidades/transacoes/extrato-transacoes/extrato-transacoes.component').then(

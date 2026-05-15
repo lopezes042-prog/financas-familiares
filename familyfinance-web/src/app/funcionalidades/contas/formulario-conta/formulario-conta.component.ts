@@ -10,6 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ContaServico } from '../../../nucleo/servicos/conta.servico';
+import { ContaEstadoServico } from '../../../nucleo/estado/conta-estado.servico';
 import {
   CriarContaComando,
   EditarContaComando,
@@ -35,6 +36,7 @@ import {
 export class FormularioContaComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly contaServico = inject(ContaServico);
+  private readonly contaEstado = inject(ContaEstadoServico);
   private readonly rota = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
@@ -105,6 +107,7 @@ export class FormularioContaComponent implements OnInit {
 
     this.contaServico.criar(comando).subscribe({
       next: () => {
+        this.contaEstado.recarregar();
         this.snackBar.open('Conta criada com sucesso', 'Fechar', { duration: 3000 });
         this.router.navigate(['/contas']);
       }
@@ -123,6 +126,7 @@ export class FormularioContaComponent implements OnInit {
 
     this.contaServico.atualizar(id, comando).subscribe({
       next: () => {
+        this.contaEstado.recarregar();
         this.snackBar.open('Conta atualizada com sucesso', 'Fechar', { duration: 3000 });
         this.router.navigate(['/contas']);
       }

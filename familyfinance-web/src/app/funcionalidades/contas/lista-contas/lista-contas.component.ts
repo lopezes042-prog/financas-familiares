@@ -9,6 +9,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ContaServico } from '../../../nucleo/servicos/conta.servico';
+import { ContaEstadoServico } from '../../../nucleo/estado/conta-estado.servico';
 import { Conta } from '../../../modelos/conta.modelo';
 import { ConfirmacaoDialogoComponent } from '../../../compartilhado/componentes/confirmacao-dialogo/confirmacao-dialogo.component';
 import { TipoContaPipe } from '../../../compartilhado/pipes/tipo-conta.pipe';
@@ -31,6 +32,7 @@ import { TipoContaPipe } from '../../../compartilhado/pipes/tipo-conta.pipe';
 })
 export class ListaContasComponent implements OnInit {
   private readonly contaServico = inject(ContaServico);
+  private readonly contaEstado = inject(ContaEstadoServico);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
@@ -71,6 +73,7 @@ export class ListaContasComponent implements OnInit {
       this.contaServico.alterarSituacao(conta.id, false).subscribe({
         next: () => {
           this.snackBar.open('Conta desativada', 'Fechar', { duration: 3000 });
+          this.contaEstado.recarregar();
           this.carregarContas();
         }
       });

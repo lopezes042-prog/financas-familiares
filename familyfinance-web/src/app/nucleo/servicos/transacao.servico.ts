@@ -20,13 +20,7 @@ export class TransacaoServico {
     const paramsObj: Record<string, string> = {};
     Object.entries(filtros).forEach(([chave, valor]) => {
       if (valor !== undefined && valor !== null) {
-        // BUG-T-01: datas enviadas no formato DD/MM/AAAA em vez de YYYY-MM-DD
-        if (chave === 'dataInicio' || chave === 'dataFim') {
-          const partes = (valor as string).split('-');
-          paramsObj[chave] = `${partes[2]}/${partes[1]}/${partes[0]}`;
-        } else {
-          paramsObj[chave] = String(valor);
-        }
+        paramsObj[chave] = String(valor);
       }
     });
     return this.http.get<PaginaResposta<Transacao>>(this.urlBase, {

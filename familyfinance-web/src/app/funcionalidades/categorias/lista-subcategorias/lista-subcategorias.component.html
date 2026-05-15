@@ -1,0 +1,99 @@
+<div class="cabecalho-pagina">
+  <div class="cabecalho-titulo">
+    <h1>Subcategorias de "{{ nomeCategoria() }}"</h1>
+    <a mat-button routerLink="/categorias">
+      <mat-icon>arrow_back</mat-icon>
+      Voltar
+    </a>
+  </div>
+  <button mat-raised-button color="primary" (click)="novaSubcategoria()">
+    <mat-icon>add</mat-icon>
+    Nova Subcategoria
+  </button>
+</div>
+
+<mat-tab-group [selectedIndex]="indiceAbaAtiva" (selectedIndexChange)="trocarAba($event)">
+
+  <!-- Aba Ativas -->
+  <mat-tab label="Ativas">
+    @if (carregando()) {
+      <div class="area-carregando">
+        <mat-spinner diameter="40" />
+      </div>
+    } @else if (subcategorias().length === 0) {
+      <div class="estado-vazio">
+        <mat-icon>folder_open</mat-icon>
+        <p>Nenhuma subcategoria cadastrada ainda.</p>
+        <button mat-stroked-button color="primary" (click)="novaSubcategoria()">
+          Cadastrar primeira subcategoria
+        </button>
+      </div>
+    } @else {
+      <table mat-table [dataSource]="subcategorias()" class="tabela-categorias">
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef>Nome</th>
+          <td mat-cell *matCellDef="let subcategoria">{{ subcategoria.nome }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef>Ações</th>
+          <td mat-cell *matCellDef="let subcategoria">
+            <button mat-icon-button (click)="editar(subcategoria)" aria-label="Editar subcategoria">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="arquivar(subcategoria)"
+              aria-label="Arquivar subcategoria"
+            >
+              <mat-icon>archive</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="colunasAtivas"></tr>
+        <tr mat-row *matRowDef="let row; columns: colunasAtivas"></tr>
+      </table>
+    }
+  </mat-tab>
+
+  <!-- Aba Arquivadas -->
+  <mat-tab label="Arquivadas">
+    @if (carregandoArquivadas()) {
+      <div class="area-carregando">
+        <mat-spinner diameter="40" />
+      </div>
+    } @else if (subcategoriasArquivadas().length === 0) {
+      <div class="estado-vazio">
+        <mat-icon>inventory_2</mat-icon>
+        <p>Nenhuma subcategoria arquivada.</p>
+      </div>
+    } @else {
+      <table mat-table [dataSource]="subcategoriasArquivadas()" class="tabela-categorias">
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef>Nome</th>
+          <td mat-cell *matCellDef="let subcategoria">{{ subcategoria.nome }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef>Ações</th>
+          <td mat-cell *matCellDef="let subcategoria">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="restaurar(subcategoria)"
+              aria-label="Restaurar subcategoria"
+            >
+              <mat-icon>unarchive</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="colunasArquivadas"></tr>
+        <tr mat-row *matRowDef="let row; columns: colunasArquivadas"></tr>
+      </table>
+    }
+  </mat-tab>
+
+</mat-tab-group>

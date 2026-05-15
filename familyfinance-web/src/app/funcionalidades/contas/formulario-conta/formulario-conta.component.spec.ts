@@ -5,10 +5,12 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
+import { signal } from '@angular/core';
 import { vi } from 'vitest';
 
 import { FormularioContaComponent } from './formulario-conta.component';
 import { ContaServico } from '../../../nucleo/servicos/conta.servico';
+import { ContaEstadoServico } from '../../../nucleo/estado/conta-estado.servico';
 import { Conta } from '../../../modelos/conta.modelo';
 
 const contaMock: Conta = {
@@ -30,6 +32,12 @@ describe('FormularioContaComponent', () => {
   let fixture: ComponentFixture<FormularioContaComponent>;
   let component: FormularioContaComponent;
   let contaServicoMock: Partial<ContaServico>;
+  const contaEstadoMock: Partial<ContaEstadoServico> = {
+    contas: signal([]),
+    carregando: signal(false),
+    garantirCarregado: vi.fn(),
+    recarregar: vi.fn()
+  };
 
   async function criarComponente(params: Record<string, string> = {}): Promise<void> {
     contaServicoMock = {
@@ -45,6 +53,7 @@ describe('FormularioContaComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: ContaServico, useValue: contaServicoMock },
+        { provide: ContaEstadoServico, useValue: contaEstadoMock },
         {
           provide: ActivatedRoute,
           useValue: { snapshot: { paramMap: { get: (k: string) => params[k] ?? null } } }

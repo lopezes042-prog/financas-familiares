@@ -10,10 +10,16 @@ export interface CategoriaResumo {
   nome: string;
 }
 
+export interface SubcategoriaResumo {
+  id: string;
+  nome: string;
+}
+
 export interface Transacao {
   id: string;
   conta: ContaResumo;
   categoria: CategoriaResumo | null;
+  subcategoria: SubcategoriaResumo | null;
   descricao: string;
   valor: number;
   tipo: TipoTransacao;
@@ -34,6 +40,7 @@ export interface PaginaResposta<T> {
 export interface CriarTransacaoComando {
   contaId: string;
   categoriaId?: string | null;
+  subcategoriaId?: string | null;
   descricao: string;
   valor: number;
   tipo: TipoTransacao;
@@ -44,6 +51,7 @@ export interface CriarTransacaoComando {
 export interface EditarTransacaoComando {
   contaId: string;
   categoriaId?: string | null;
+  subcategoriaId?: string | null;
   descricao: string;
   valor: number;
   tipo: TipoTransacao;

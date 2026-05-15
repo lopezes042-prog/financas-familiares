@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>Restaurar "{{ data.nome }}"</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="formulario" class="form-restaurar">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Ícone</mat-label>
+      <input matInput formControlName="icone" placeholder="ex: restaurant" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Cor</mat-label>
+      <input matInput formControlName="cor" placeholder="ex: #ef4444" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="tipo">
+        @for (tipo of tiposCategoria; track tipo.valor) {
+          <mat-option [value]="tipo.valor">{{ tipo.rotulo }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="restaurarSubcategorias">
+      Restaurar subcategorias arquivadas
+    </mat-checkbox>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="restaurar()">Restaurar</button>
+</mat-dialog-actions>

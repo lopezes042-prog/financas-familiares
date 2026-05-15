@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{ modoEdicao ? 'Editar subcategoria' : 'Nova subcategoria' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="formulario">
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" />
+      @if (formulario.controls.nome.hasError('required')) {
+        <mat-error>Nome é obrigatório</mat-error>
+      } @else if (formulario.controls.nome.hasError('minlength')) {
+        <mat-error>Mínimo de 2 caracteres</mat-error>
+      } @else if (formulario.controls.nome.hasError('maxlength')) {
+        <mat-error>Máximo de 100 caracteres</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="salvar()">Salvar</button>
+</mat-dialog-actions>

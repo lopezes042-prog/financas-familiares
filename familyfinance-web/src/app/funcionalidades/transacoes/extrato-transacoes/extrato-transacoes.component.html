@@ -11,7 +11,7 @@
     <mat-label>Conta</mat-label>
     <mat-select [ngModel]="contaSelecionada()" (ngModelChange)="selecionarConta($event)">
       <mat-option [value]="null">Selecione uma conta</mat-option>
-      @for (conta of contas(); track conta.id) {
+      @for (conta of contaEstado.contas(); track conta.id) {
         <mat-option [value]="conta">{{ conta.nome }}</mat-option>
       }
     </mat-select>
@@ -105,16 +105,18 @@
       <th mat-header-cell *matHeaderCellDef>Categoria</th>
       <td mat-cell *matCellDef="let transacao">
         {{ transacao.categoria?.nome ?? 'Sem categoria' }}
+        @if (transacao.subcategoria) {
+          / {{ transacao.subcategoria.nome }}
+        }
       </td>
     </ng-container>
 
     <ng-container matColumnDef="valor">
       <th mat-header-cell *matHeaderCellDef>Valor</th>
       <td mat-cell *matCellDef="let transacao">
-        <!-- BUG-T-03: classes de cor invertidas — RECEITA usa classe de despesa e vice-versa -->
         <span
-          [class.ff-valor-despesa]="transacao.tipo === 'RECEITA'"
-          [class.ff-valor-receita]="transacao.tipo === 'DESPESA'"
+          [class.ff-valor-receita]="transacao.tipo === 'RECEITA'"
+          [class.ff-valor-despesa]="transacao.tipo === 'DESPESA'"
         >
           {{ transacao.valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
         </span>

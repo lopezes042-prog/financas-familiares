@@ -1,5 +1,7 @@
 export type TipoCategoria = 'RECEITA' | 'DESPESA';
 
+export type SituacaoCategoria = 'ativa' | 'arquivada';
+
 export interface Categoria {
   id: string;
   nome: string;
@@ -7,6 +9,18 @@ export interface Categoria {
   icone: string | null;
   cor: string | null;
   ativo: boolean;
+  subcategoriasAtivas: number;
+}
+
+export interface ArquivamentoResposta {
+  subcategoriasArquivadas: number;
+}
+
+export interface RestaurarCategoriaComando {
+  icone?: string | null;
+  cor?: string | null;
+  tipo?: TipoCategoria | null;
+  restaurarSubcategorias: boolean;
 }
 
 export interface CriarCategoriaComando {
